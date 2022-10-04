@@ -18,7 +18,7 @@ export const fetchVideosAsync = createAsyncThunk(
 );
 
 // create video slice
-const videoSlice = createSlice({
+const videosSlice = createSlice({
   name: "videos",
   initialState,
   extraReducers: (builder) => {
@@ -28,6 +28,7 @@ const videoSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchVideosAsync.fulfilled, (state, action) => {
+        state.isError = false;
         state.isLoading = false;
         state.videos = action.payload;
       })
@@ -40,4 +41,4 @@ const videoSlice = createSlice({
   },
 });
 
-export default videoSlice.reducer;
+export default videosSlice.reducer;
