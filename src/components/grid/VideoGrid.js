@@ -10,9 +10,11 @@ export default function VideoGrid() {
     (state) => state.videos
   );
 
+  const { tags, search } = useSelector((state) => state.filters);
+
   useEffect(() => {
-    dispatch(fetchVideosAsync());
-  }, [dispatch]);
+    dispatch(fetchVideosAsync({ tags, search }));
+  }, [dispatch, tags, search]);
 
   let content;
   if (isLoading) content = <Loading />;
@@ -24,7 +26,9 @@ export default function VideoGrid() {
     content = <div className="col-span-12">No Videos Found</div>;
 
   if (!isError && !isLoading && videos?.length > 0) {
-    content = videos.map((video) => <VideoGridItem key={video.id} video={video} />);
+    content = videos.map((video) => (
+      <VideoGridItem key={video.id} video={video} />
+    ));
   }
 
   return (
